@@ -1,0 +1,23 @@
+
+<h1><%= @user.name %></h1>
+
+<ul>
+  <li>Name: <%= @user.name %></li>
+  <li>Email: <%= @user.email %></li>
+  <li>Question count: <%= @user.questions.count%></li>
+  <li>Comment count: <%= @user.comments.count%></li>
+  <li>Badges count: <br>
+  <%= image_tag @user.image %></li>
+  <!-- <li><#%= @user.admin %></li> -->
+</ul>
+
+<% if @current_user && @current_user.id == @user.id %>
+
+  <div class="controls">
+    <!-- Link to edit -->
+    <%= link_to "Edit", edit_user_path(@current_user.id) %>
+    <!-- Link to delete -->
+    <%= link_to "Delete Account", user_path( @current_user.id ), :method => :delete %>
+  </div>
+
+<% end %>

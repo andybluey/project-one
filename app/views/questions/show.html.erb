@@ -1,0 +1,27 @@
+<h1><%= @question.title %></h1>
+
+<p><%= @question.body %></p>
+<br>
+<p>Posted by: <%= link_to @question.user.name, "/users/#{@question.user.id}" %>
+<%= image_tag @question.user.image %></p>
+<!-- @question.user.name Throwing errors for unnamed questions-->
+
+<p></p>
+
+<% if @current_user.present? == false %>
+
+<% elsif @question.user.id == @current_user.id%>
+  <div class="controls">
+    <%= link_to "Edit", "/questions/#{@question.id}/edit" %>
+    <%= link_to "Delete", "/questions/#{@question.id}", :method => :delete, :data => { :confirm => "Are you sure?"} %>
+<% end %>
+
+</div>
+
+<hr>
+
+<h3>Comments</h3>
+<%= render @question.comments.order("created_at ASC") %>
+<!-- Edit or delete a comment -->
+<h3>Add a comment below:</h3>
+<%= render 'comments/form' %>

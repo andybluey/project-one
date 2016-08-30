@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  email           :string
+#  name            :string
+#  admin           :string           default("f")
+#  image           :text
+#  password_digest :text
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  name: MyString
+  admin: MyString
+  image: MyText
+  password_digest: MyText
+
+two:
+  email: MyString
+  name: MyString
+  admin: MyString
+  image: MyText
+  password_digest: MyText
