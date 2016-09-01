@@ -1,0 +1,14 @@
+<h1>Comments for each user</h1>
+
+<!-- Print every comment -->
+<!--  <ul>
+  <#% @comments.each do |a| %>
+  <li><#%= a.user.name %>: <#%= a.body %></li>
+  <#% end %>
+</ul> -->
+
+<ul>
+  <%= @current_user.comments.each do |c| %>
+  <li><%= c.body %></li>
+  <% end %>
+</ul>

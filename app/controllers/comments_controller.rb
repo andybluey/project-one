@@ -10,7 +10,14 @@ class CommentsController < ApplicationController
     redirect_to question_path(@question)
   end
 
+  def update
+    comment = Comment.find params[:id]
+    comment.update comment_params
+    redirect_to :back
+  end
+
   def edit
+    @question = Question.find params[:question_id]
     @comment = @question.comments.find params[:id]
   end
 
@@ -21,9 +28,28 @@ class CommentsController < ApplicationController
     redirect_to question_path(@question)
   end
 
+  # Allow voting
+  def upvote
+    @comment = Comment.find(params[:id])
+    @comment.upvote_by @current_user
+    redirect_to :back
+    sum = Comment.all.sum(:cached_votes_total)
+  end
+
+  def downvote
+    @comment = Comment.find(params[:id])
+    @comment.downvote_by @current_user
+    redirect_to :back
+  end
+
+  # Controller to view all comments - Not directly refenced atm
+  def all_index
+    @comments = Comment.all
+  end
+
   private
     def comment_params
-      params.require(:comment).permit(:body, :question_id)
+      params.require(:comment).permit(:body, :question_id, :user_id)
     end
 
     def check_user

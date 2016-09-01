@@ -1,8 +1,14 @@
 class QuestionsController < ApplicationController
   before_action :authorise, :only => [:create, :update, :edit, :destroy]
   before_action :check_user, :only => [:edit, :update, :destroy]
+
   def index
-    @questions = Question.all
+
+    if params[:search]
+      @questions = Question.search(params[:search]).order("created_at Desc").paginate(:page => params[:page], :per_page => 5)
+    else
+      @questions = Question.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 5)
+    end
   end
 
   def show
@@ -15,13 +21,14 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    question = Question.new(question_params)
-    question.user_id = @current_user.id
-    question.save
-    # question = Question.create( question_params )
-    # @current_user.question << question
-    # I'm hoping this will solve the create question problem
-    redirect_to "/questions/#{question.id}"
+    @question = @current_user.questions.create(question_params)
+    @question.tag_ids = params[:question][:tag_ids]
+    if @question.save
+      flash[:success] = "New Question created"
+      redirect_to question_path(@question)
+    else
+      render :new
+    end
   end
 
   def edit
@@ -40,9 +47,16 @@ class QuestionsController < ApplicationController
     redirect_to "/questions"
   end
 
+  # Allow voting
+  def upvote
+    @question = Question.find(params[:id])
+    @question.upvote_by @current_user
+    redirect_to :back
+  end
+
   private
     def question_params
-      params.require(:question).permit(:title, :body, :user_id)
+      params.require(:question).permit(:title, :body, :user_id, :tag_id, :tag_ids)
     end
 
     def check_user

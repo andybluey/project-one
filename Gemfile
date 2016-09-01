@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 
+gem 'will_paginate', '~> 3.0.5'
+gem 'acts_as_votable', '~> 0.10.0'
+gem 'cloudinary'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
@@ -43,6 +46,7 @@ group :development, :test do
   gem "better_errors"
   gem "binding_of_caller"
   gem "meta_request"
+
 end
 
 group :production do

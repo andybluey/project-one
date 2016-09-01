@@ -4,10 +4,29 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :questions do
+    member do
+      put "like", to: "questions#upvote"
+      put "dislike", to: "questions#downvote"
+    end
+  end
+
+  resources :comments do
+    member do
+      put "like", to: "comments#upvote"
+      put "dislike", to: "comments#downvote"
+    end
+  end
+
+  get 'password-reset' => 'users#password_reset'
+  get 'password-reset-sent' => 'users#password_reset_sent'
+
+  get "/comments" => "comments#all_index", :as => "all_index"
+
   root "users#index"
   get "/users/edit" => 'users#edit', :as => "edit_user"
 
-  resources :users, :except => [:edit]
+  resources :tags, :users, :except => [:edit]
 
   get '/login' => 'sessions#new', :as => "login"
   post '/login' => 'sessions#create'

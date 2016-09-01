@@ -1,10 +1,25 @@
 <% if comment.user %>
-<h4>Reply: </h4>
-<p><%= comment.body %> </p>
-<p>User: <%= link_to( comment.user.name, "/users/#{comment.user.id}" ) %> <%= image_tag comment.user.image %>
-Created: <%= time_ago_in_words(comment.created_at) %> ago.</p>
 
-<!-- If comment.user.id == @current_user <p>
-  <#%= link_to 'Destroy Comment', ([@question, @comment]), method: :delete, data: { confirm: 'Are you sure?'} %>
-</p> -->
+  <div><strong>Reply: </strong></div>
+
+  <p><%= comment.body %> </p>
+  <p><strong>User: <%= link_to( comment.user.name, "/users/#{comment.user.id}" ) %> <%= image_tag comment.user.image %>
+  Created: <%= time_ago_in_words(comment.created_at) %> ago.  <%= link_to like_comment_path(comment), method: :put do %>
+  Vote <%= comment.get_upvotes.size %></strong>
+
+<% end %>
+<br>
+  <% if comment.user == @current_user %>
+
+  <%= form_for([@question, comment]) do |f| %>
+      <%= f.text_area :body %> <br>
+      <input class="button" type="submit" value="EDIT">
+      <a class="button" <%= link_to 'Delete Comment', ([@question, comment]), method: :delete, data: { confirm: 'Are you sure?'} %></a>
+
+  <% end %>
+  <% end %>
+<!--
+  <#%= link_to 'Destroy Comment', ([@question, comment]), method: :delete, data: { confirm: 'Are you sure?'} %>
+</p>
+<%% end %> -->
 <% end %>

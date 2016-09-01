@@ -1,12 +1,17 @@
+<table>
+  <tr>
+    <td class="big-border">
+
 <h1><%= @question.title %></h1>
 
 <p><%= @question.body %></p>
 <br>
-<p>Posted by: <%= link_to @question.user.name, "/users/#{@question.user.id}" %>
-<%= image_tag @question.user.image %></p>
-<!-- @question.user.name Throwing errors for unnamed questions-->
-
-<p></p>
+<strong>Posted by: <%= link_to @question.user.name, "/users/#{@question.user.id}" %>
+  <%= image_tag @question.user.image %>
+  Created: <%= time_ago_in_words(@question.created_at) %> ago.
+  <%= link_to like_question_path(@question), method: :put do %>
+  Vote <%= @question.get_upvotes.size %></strong>
+<% end %>
 
 <% if @current_user.present? == false %>
 
@@ -14,14 +19,24 @@
   <div class="controls">
     <%= link_to "Edit", "/questions/#{@question.id}/edit" %>
     <%= link_to "Delete", "/questions/#{@question.id}", :method => :delete, :data => { :confirm => "Are you sure?"} %>
+  </div>
 <% end %>
+  <p>
+    Tags: <% if @question.tags.count == 0 %> None
+    <% else %><% @question.tags.each do |b| %>
+    <%= link_to(b.name, tag_path(b)) %>
+    <% end %>
+    <% end %>
+  </p>
 
-</div>
 
 <hr>
 
 <h3>Comments</h3>
 <%= render @question.comments.order("created_at ASC") %>
-<!-- Edit or delete a comment -->
+
 <h3>Add a comment below:</h3>
 <%= render 'comments/form' %>
+</td>
+</tr>
+</table>

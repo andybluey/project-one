@@ -1,0 +1,7 @@
+<h1>A list of questions for <%= @tag.name %></h1>
+<%= link_to( "Back to tags", tags_path() )%>
+<h4>Questions under <%= @tag.name %>: <%= @tag.questions.count %></h4>
+<div>Sorted by popularity</div>
+<% @tag.get_sorted_questions.reverse_each do |b| %>
+  <%= link_to(b.title, question_path( b )) %> Votes: <%= b.get_upvotes.size %><br>
+<% end %>

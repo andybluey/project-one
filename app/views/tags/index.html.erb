@@ -1,0 +1,10 @@
+<!-- Print every tag -->
+<h2>Search questions via tags</h2>
+
+  <% @tags.each do |a| %>
+
+<!-- Add a link_to( -->
+  <a class="button" <%= link_to(a.name, tag_path( a )) %></a>
+  <!-- <#%= link_to(a.name, tag_path( a )) %> -->
+
+    <% end %>

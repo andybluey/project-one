@@ -1,14 +1,64 @@
-<h1>Posts:</h1>
-<p><%= link_to "Post a new question", "/questions/new" %></p>
+<h2>HackOverflow</h2>
+<h6>Stats: Total Questions <%= @questions.count%> -
+Total Replies <%= Comment.count%> - Total Votes on site: <%= Question.get_all_votes %></h6>
 
-<% @questions.each do |a| %>
-  <h4><%= link_to( a.title, "/questions/#{a.id}" ) %></h4>
-  <p><%= link_to a.user.name, "/users/#{a.user.id}" %>:
-  <%= image_tag a.user.image %></p>
-    <!-- a.user.name throwing errors when creating new questions -->
-    <p>Post: <%= truncate( a.body, :length => 40 ) %></p>
-    <p>Replies: <%= a.comments.count%>
-    Updated: <%= time_ago_in_words(a.created_at) %> ago.</p>
+<!-- Search form -->
+
+  <%= form_tag(questions_path, :method => "get", id: "search-form") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Search Questions" %>
+  <input class="button-primary" type="submit" value="SEARCH">
+  <!-- <#%= submit_tag "Search" %> -->
+  <% end %>
+
+
+<div class = "row">
+  <div class = "one-half column"><h5>Posts:</h5></div>
+  <div><h5><%= link_to "Post a new question", "/questions/new" %></h5></div>
+</div>
+
+<div class = "row">
+<% if @questions.empty? %>
+  <p>There are no posts to display</p>
+  <%= link_to( "Back", "/questions") %>
 <% end %>
 
-<h4><%= link_to "Post a new question", "/questions/new" %></h4>
+    <%= will_paginate @questions %>
+
+<table>
+<% @questions.each do |a| %>
+<tr>
+  <td class="big-border">
+
+  <h5 class="twelve columns"><%= link_to( a.title, "/questions/#{a.id}" ) %> - Posted by: <%= link_to a.user.name, "/users/#{a.user.id}" %> -
+    <%= link_to like_question_path(a), method: :put do %>
+    Vote
+    <%= a.get_upvotes.size %>
+
+    <% end %>
+  </h5>
+
+    <div>Post: <%= truncate( a.body, :length => 80 ) %></div>
+
+      <% if a.comments.count == 0 %>
+        <div>Quick - be the first to reply</div>
+        <div>Updated: <%= time_ago_in_words(a.created_at) %> ago.</div>
+      <% else %>
+        <div>Replies: <%= a.comments.count%> Updated: <%= time_ago_in_words(a.comments.last.created_at) %> ago.</div>
+      <% end %>
+
+      <% if a.tags.count == 0 %>
+        No tags
+      <% else %>Tags: <% a.tags.each do |b| %>
+      <%= link_to(b.name, tag_path(b)) %>
+      <% end %> <br>
+      <% end %> <br>
+    <% end %><br>
+  </td>
+  </tr>
+</table>
+    <%= will_paginate @questions %>
+  <div class = "row">
+    <div class = "one-half column"><h5></h5></div>
+    <div><h5><%= link_to "Post a new question", "/questions/new" %></h5></div>
+  </div>
+</div>

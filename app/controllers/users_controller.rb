@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find( params[:id] )
+    # @question = User.find
   end
 
   def new
@@ -16,6 +17,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
+      UserMailer.welcome(@user).deliver_now
       flash[:success] = "User was successfully created"
       redirect_to users_path
     else
@@ -42,9 +44,18 @@ class UsersController < ApplicationController
     redirect_to users_path()
   end
 
+  # Password resets
+  def password_reset
+    @user = @current_user
+  end
+
+  def password_reset_sent
+    UserMailer.reset_password(@current_user).deliver_now
+  end
+
   private
     def user_params
-      params.require(:user).permit(:email, :name, :password, :password_confirmation, :image)
+      params.require(:user).permit(:email, :name, :password, :password_confirmation, :image, :question_id, :comment_id)
     end
 
 

@@ -1,23 +1,55 @@
 
 <h1><%= @user.name %></h1>
 
-<ul>
-  <li>Name: <%= @user.name %></li>
-  <li>Email: <%= @user.email %></li>
-  <li>Question count: <%= @user.questions.count%></li>
-  <li>Comment count: <%= @user.comments.count%></li>
-  <li>Badges count: <br>
-  <%= image_tag @user.image %></li>
-  <!-- <li><#%= @user.admin %></li> -->
-</ul>
-
 <% if @current_user && @current_user.id == @user.id %>
 
   <div class="controls">
-    <!-- Link to edit -->
-    <%= link_to "Edit", edit_user_path(@current_user.id) %>
-    <!-- Link to delete -->
-    <%= link_to "Delete Account", user_path( @current_user.id ), :method => :delete %>
-  </div>
 
+    <%= link_to "Edit", edit_user_path(@current_user.id) %>
+
+    <%= link_to "Delete Account", user_path( @current_user.id ), :method => :delete %>
+
+    <%= link_to 'Reset Password', password_reset_path %> </div>
 <% end %>
+
+
+  <li>Name: <%= @user.name %></li>
+  <li>Email: <%= @user.email %></li>
+  <li>Member Since: <%= @user.created_at.strftime("%B '%y") %></li>
+  <li>Question count: <%= @user.questions.count%> - Last Question:
+    <% if @user.questions.count > 0 %>
+    <%= time_ago_in_words(@user.questions.last.created_at) %>
+    <% end %> ago.</li>
+  <li>Comment count: <%= @user.comments.count%> -
+    Last Comment: <% if @user.comments.count > 0 %>
+    <%= time_ago_in_words(@user.comments.last.created_at) %>
+    <% end %> ago.</li>
+  <li>Total Questions Votes: <%= @user.get_votes %></li>
+  <li>Total Comments Votes: <%= @user.get_comments_votes %><br>
+  <%= image_tag @user.image %></li>
+
+</ul>
+<div class ="row">
+  <div class = "one-half column">
+<h5>Most popular questions from <%= @user.name %></h5>
+ <ul>
+  <% @user.get_sorted_questions.reverse_each do |a| %>
+      <li><%= link_to truncate(a.title, :length => 40), question_path( a ) %> Votes <%= a.get_upvotes.size %></li>
+  <% end %>
+</ul>
+  </div>
+  <div class = "one-half column">
+<h5>Most popular comments from <%= @user.name %></h5>
+ <ul>
+  <% @user.get_sorted_comments.reverse_each do |a| %>
+<!-- Add a link_to( -->
+    <li><%= link_to truncate(a.body, :length => 40), question_path( a.question_id ) %>
+       Votes <%= a.get_upvotes.size %></li>
+
+    <% end %>
+  </ul>
+</div>
+</div>
+<!-- Work on admin site -->
+<!-- <#% if @current_user.name == "Admin" %>
+<#% end %> -->
