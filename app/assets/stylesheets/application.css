@@ -276,7 +276,7 @@ select:focus {
   outline: 0; }
 label,
 legend {
-  display: block;
+  /*display: block;*/
   margin-bottom: .5rem;
   font-weight: 600; }
 fieldset {
@@ -430,10 +430,41 @@ there.
 
 /* ANDREW'S STYLES*/
 
+header {
+  height: 10px;
+  background: black;
+  color: ghostwhite;
+  text-align: center;
+  top: 0px;
+}
+
+footer {
+  height: 20px;
+  /*padding: 10px;*/
+  /*float: right;*/
+  /*margin: 10px auto;*/
+  /*display: inline-block;*/
+  background: black;
+  color: ghostwhite;
+  text-align: center;
+  bottom: 0px;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+}
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
 
 .big-border {
   border-bottom: 3px solid #E1E1E1;
-  width: 75%;
+  width: 60%;
 }
 
 tr:nth-child(even) {
@@ -454,19 +485,6 @@ tr:nth-child(odd) {
   padding: 6px 10px;*/
 }
 
-img {
-  width: 40px;
-  height: 40px;
-}
-nav {
-  display: inline;
-  padding: 40px;
-}
-
 .tag-boxes {
   display: inline-block;
-}
-
-.body-text {
-
 }

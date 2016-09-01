@@ -5,7 +5,7 @@ class QuestionsController < ApplicationController
   def index
 
     if params[:search]
-      @questions = Question.search(params[:search]).order("created_at Desc").paginate(:page => params[:page], :per_page => 5)
+      @questions = Question.search(params[:search]).order("created_at DESC").paginate(:page => params[:page], :per_page => 5)
     else
       @questions = Question.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 5)
     end

@@ -56,11 +56,11 @@ u3.questions << q3
 u3.questions << q4
 u3.questions << q5
 u5.questions << q6
-u4.questions << q7
-u6.questions << q8
-u3.questions << q9
-u1.questions << q10
-u3.questions << q11
+u4.questions << q7 << q17
+u6.questions << q8 << q16
+u3.questions << q9 << q15
+u1.questions << q10 << q14
+u3.questions << q11 << q12 << q13
 
 t1.questions << q1 << q2 << q3 << q7 << q8
 t2.questions << q1 << q2 << q3 << q11 << q14
