@@ -1,62 +1,77 @@
 <!-- <h2>HackOverflow</h2> -->
-<h6>Stats: Total Questions <%= @questions.count%> -
-Total Replies <%= Comment.count%> - Total Votes on site: <%= Question.get_all_votes %></h6>
+<div class="container">
+
+
+  <h6>Hack Overflow Stats: Total Questions <%= @questions.count%> -
+  Total Replies <%= Comment.count%>
+   - Total Votes: <%= Question.get_all_votes %></h6>
 
   <%= form_tag(questions_path, :method => "get", id: "search-form") do %>
-  <%= text_field_tag :search, params[:search], placeholder: "Search Questions" %>
-  <input class="button-primary" type="submit" value="SEARCH">
+    <%= text_field_tag :search, params[:search], placeholder: "Search Questions" %>
+    <input class="button-primary" type="submit" value="SEARCH">
   <% end %>
 
-<div class = "row">
-  <div class = "nine columns"><h5>Posts:</h5></div>
-  <div><h5><%= link_to "Post a new question", "/questions/new" %></h5></div>
-</div>
 
-<div class = "row">
+
   <% if @questions.empty? %>
     <p>There are no posts to display</p>
     <%= link_to( "Back", "/questions") %>
   <% end %>
 
-<%= will_paginate @questions %>
+  <div class="row">
+    <div class="eight columns">
+      <%= will_paginate @questions %>
+    </div>
+    <div class="four columns">
+      <a class="button" <%= link_to "Post a new question", "/questions/new" %></a>
+    </div>
+  </div>
 
-<table>
-  <% @questions.each do |a| %>
-    <tr>
-    <td class="big-border">
+  <table>
+    <% @questions.each do |a| %>
+      <tr>
+      <td class="big-border">
+        <div class="row">
+        <div class="nine columns">
+          <h5 class="question-head">Post by: <%= link_to a.user.name, "/users/#{a.user.id}" %> -
+            <%= link_to( a.title, "/questions/#{a.id}" ) %>
+        </div>
 
-    <h5 class="twelve columns"><%= link_to( a.title, "/questions/#{a.id}" ) %> - Posted by: <%= link_to a.user.name, "/users/#{a.user.id}" %> -
-      <%= link_to like_question_path(a), method: :put do %>
-      Vote
-      <%= a.get_upvotes.size %>
+        <div class="three columns">
+          <div class="button">
+        </h5>
+          <%= link_to like_question_path(a), method: :put do %>Vote
+            <%= a.get_upvotes.size %></div></div>
+          <% end %>
+        </div>
 
-      <% end %>
-    </h5>
+        <div>Post: <%= truncate( a.body, :length => 220 ) %>
+          </div><br><hr class="plain-line">
 
-      <div>Post: <%= truncate( a.body, :length => 220 ) %></div>
+          <% if a.comments.count == 0 %>
+            <strong><div>Quick - be the first to reply</div></strong>
+            <div>Updated: <%= time_ago_in_words(a.created_at) %> ago.</div>
+          <% else %>
+            <div>Replies: <%= a.comments.count%> - Updated: <%= time_ago_in_words(a.comments.last.created_at) %> ago.</div>
+          <% end %>
+          </div>
+          <% if a.tags.count == 0 %>
+            No tags
+          <% else %>Tags: <% a.tags.each do |b| %>
+          <a class="button" <%= link_to(b.name, tag_path(b)) %></a>
+          <% end %> <br>
+          <% end %>
+        <% end %><br>
+      </td>
+      </tr>
+    </table>
 
-        <% if a.comments.count == 0 %>
-          <strong><div>Quick - be the first to reply</div>
-          <div>Updated: <%= time_ago_in_words(a.created_at) %> ago.</div>
-        <% else %>
-          <strong><div>Replies: <%= a.comments.count%> Updated: <%= time_ago_in_words(a.comments.last.created_at) %> ago.</div>
-        <% end %></strong>
-
-        <% if a.tags.count == 0 %>
-          No tags
-        <% else %>Tags: <% a.tags.each do |b| %>
-        <%= link_to(b.name, tag_path(b)) %>
-        <% end %> <br>
-        <% end %> <br></strong>
-      <% end %><br>
-    </td>
-    </tr>
-  </table>
-
-<%= will_paginate @questions %>
-
-  <div class = "row">
-    <div class = "nine columns"><h5></h5></div>
-    <div><h5><%= link_to "Post a new question", "/questions/new" %></h5></div>
+  <div class="row">
+    <div class="eight columns">
+      <%= will_paginate @questions %>
+    </div>
+    <div class="four columns">
+      <a class="button" <%= link_to "Post a new question", "/questions/new" %></a>
+    </div>
   </div>
 </div>

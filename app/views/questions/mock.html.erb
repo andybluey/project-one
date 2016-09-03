@@ -7,13 +7,11 @@
       </div>
 
       <div class="three columns">
-        <p class="button">
-        <%= link_to like_question_path(@question), method: :put do %>Vote
+        <p class="button">Vote
         <%= @question.get_upvotes.size %></p></div>
-
-
+      </h5>
+        <%= link_to like_question_path(@question), method: :put do %>
         <% end %>
-            </h5>
       </div>
 
       <div>Post: <%= @question.body%><br><hr class="plain-line"></div>

@@ -1,21 +1,23 @@
-<h4>Post a question and select the relevant tags</h4>
+<div class="container">
+  <h5>Post a question and select the relevant tags</h5>
 
-<%= form_for @question do |f| %>
-  <p>
-    <%= f.label :title %>
-    <%= f.text_field :title, :required => true %>
-    <div class = "body-area"><%= f.label :body %>
-    <%= f.text_area :body %></div>
-  </p>
+  <%= form_for @question do |f| %>
+    <p>
+      <%= f.label :title %>
+      <%= f.text_field :title, :required => true %>
+      <div class = "body-area"><%= f.label :body %>
+      <%= f.text_area :body %></div>
+    </p>
 
-  <p>Please tag the areas relevant to your question.
-    <%= hidden_field_tag "question[tag_ids][]", nil %>
-      <% Tag.all.each do |tag| %>
-        <div><%= check_box_tag "question[tag_ids][]", tag.id, @question.tag_ids.include?(tag.id), id: dom_id(tag) %><%= label_tag dom_id(tag), tag.name %></div>
+    <p>Please tag the areas relevant to your question.
+      <%= hidden_field_tag "question[tag_ids][]", nil %>
+        <% Tag.all.each do |tag| %>
+          <div class="button"><%= check_box_tag "question[tag_ids][]", tag.id, @question.tag_ids.include?(tag.id), id: dom_id(tag) %><%= label_tag dom_id(tag), tag.name %></div>
 
-      <% end %>
-  </p>
+        <% end %>
+    </p>
 
-  <input class="button-primary" type="submit" value="SUBMIT">
+    <input class="button-primary" type="submit" value="SUBMIT">
 
-<% end %>
+  <% end %>
+</div>

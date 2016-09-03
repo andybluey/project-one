@@ -47,5 +47,13 @@ class User < ActiveRecord::Base
         end
     end
 
+    def get_total_votes
+        all_votes = self.map do |q|
+            q.get_upvotes.size
+        end
+        total_votes = all_votes.reduce(0) do |sum, num|
+            sum + num
+        end
+    end
 
 end

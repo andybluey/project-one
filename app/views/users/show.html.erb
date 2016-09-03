@@ -1,55 +1,71 @@
+<div class="container">
 
-<h1><%= @user.name %></h1>
-
-<% if @current_user && @current_user.id == @user.id %>
-
-  <div class="controls">
-
-    <%= link_to "Edit", edit_user_path(@current_user.id) %>
-
-    <%= link_to "Delete Account", user_path( @current_user.id ), :method => :delete %>
-
-    <%= link_to 'Reset Password', password_reset_path %> </div>
-<% end %>
-
-
-  <li>Name: <%= @user.name %></li>
-  <li>Email: <%= @user.email %></li>
-  <li>Member Since: <%= @user.created_at.strftime("%B '%y") %></li>
-  <li>Question count: <%= @user.questions.count%> - Last Question:
-    <% if @user.questions.count > 0 %>
-    <%= time_ago_in_words(@user.questions.last.created_at) %>
-    <% end %> ago.</li>
-  <li>Comment count: <%= @user.comments.count%> -
-    Last Comment: <% if @user.comments.count > 0 %>
-    <%= time_ago_in_words(@user.comments.last.created_at) %>
-    <% end %> ago.</li>
-  <li>Total Questions Votes: <%= @user.get_votes %></li>
-  <li>Total Comments Votes: <%= @user.get_comments_votes %><br>
-  <%= image_tag @user.image %></li>
-
-</ul>
-<div class ="row">
-  <div class = "one-half column">
-<h5>Most popular questions from <%= @user.name %></h5>
- <ul>
-  <% @user.get_sorted_questions.reverse_each do |a| %>
-      <li><%= link_to truncate(a.title, :length => 40), question_path( a ) %> Votes <%= a.get_upvotes.size %></li>
-  <% end %>
-</ul>
+<!-- <div class="row">
+<div class="eleven columns"> -->
+<!-- <div class="box"> -->
+<div class="row">
+  <div class="one-half column">
+    <h5><%= @user.name %>
+      <% if @current_user && @current_user.id == @user.id %>
+        <a class="button" <%= link_to("Edit", edit_user_path(@current_user.id)) %></a>
+        <a class="button" <%= link_to("Reset Password", (password_reset_path)) %></a>
+      <% end %>
+    </h5>
   </div>
-  <div class = "one-half column">
-<h5>Most popular comments from <%= @user.name %></h5>
- <ul>
-  <% @user.get_sorted_comments.reverse_each do |a| %>
-<!-- Add a link_to( -->
-    <li><%= link_to truncate(a.body, :length => 40), question_path( a.question_id ) %>
-       Votes <%= a.get_upvotes.size %></li>
+  <div class="one-half column">
+    <h5>User Stats</h5>
+  </div>
+</div>
 
-    <% end %>
-  </ul>
+  <div class="row">
+    <div class="one-half column">
+
+        <div>Name: <%= @user.name %></div>
+        <div>Email: <%= @user.email %></div>
+        <div>Member Since: <%= @user.created_at.strftime("%B '%y") %></div>
+        <br>
+        <%= image_tag @user.image %>
+    </div>
+
+
+  <div class="one-half column">
+
+    <div>Question count: <%= @user.questions.count%></div>
+    <div>Last Question:
+      <% if @user.questions.count > 0 %>
+      <%= time_ago_in_words(@user.questions.last.created_at) %>
+      <% end %> ago.</div>
+    <div>Comment count: <%= @user.comments.count%> -</div>
+      <div>Last Comment: <% if @user.comments.count > 0 %>
+      <%= time_ago_in_words(@user.comments.last.created_at) %>
+      <% end %> ago.</div>
+    <div>Total Questions Votes: <%= @user.get_votes %></div>
+    <div>Total Comments Votes: <%= @user.get_comments_votes %></div>
+  </div>
 </div>
+<!-- </div> -->
+<hr>
+  <div class ="row">
+    <div class = "one-half column">
+      <h5>Popular questions from <%= @user.name %></h5>
+        <ul>
+          <% @user.get_sorted_questions.reverse_each do |a| %>
+              <li><%= link_to truncate(a.title, :length => 40), question_path( a ) %> Votes <%= a.get_upvotes.size %></li>
+          <% end %>
+        </ul>
+    </div>
+
+
+    <div class = "one-half column">
+      <h5>Popular comments from <%= @user.name %></h5>
+        <ul>
+          <% @user.get_sorted_comments.reverse_each do |a| %>
+        <!-- Add a link_to( -->
+            <li><%= link_to truncate(a.body, :length => 40), question_path( a.question_id ) %>
+               Votes <%= a.get_upvotes.size %></li>
+
+            <% end %>
+        </ul>
+    </div>
+  </div>
 </div>
-<!-- Work on admin site -->
-<!-- <#% if @current_user.name == "Admin" %>
-<#% end %> -->

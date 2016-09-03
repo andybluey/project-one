@@ -1,23 +1,23 @@
-
+<div class="container">
 <div class="row">
-  <div class="three columns"></div>
 
-  <div class="six columns">
-    <h3>Users of Hackoverflow</h3>
+  <div class="one-third column"></div>
+  <div class="two-thirds column">
   <table class="u-full-width">
     <thead>
       <tr>
-      <th>User</th>
-      <th>Questions</th>
-      <th>Comments</th>
-      <th>Votes</th>
-    </tr>
-  </thead>
+        <th>User of Hack Overflow</th>
+        <th>Questions</th>
+        <th>Comments</th>
+        <th>Votes</th>
+      </tr>
+    </thead>
   <tbody>
     <% @users.each do |u| %>
+
       <tr>
         <!-- <#% u.order("questions_count asc") %> -->
-        <td><%= link_to( u.name, user_path( u ) ) %></td>
+        <td><a class="button" <%= link_to(u.name, user_path( u )) %></a></td>
         <td><%= u.questions.count%></td>
         <td><%= u.comments.count%></td>
         <td><%= u.get_votes + u.get_comments_votes %></td>
@@ -26,4 +26,5 @@
     </tbody>
   </table>
   </div>
+</div>
 </div>
