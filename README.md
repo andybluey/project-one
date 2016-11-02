@@ -29,7 +29,7 @@ This is Project One of GA. I tried to recreate a similar model to stack overflow
 - 'bcrypt', '~> 3.1.7'
 
 
-## Future Inclusions
+## Futcure Inclusions
 - Add result limits to the loops given the fact a blog would grow over time.
 - Control the deletion of existing users. The delete user functionality was initially added, but deleting a user also lost the content.
-- Enhance the data and statistics already included in the app. 
+- Enhance the data and statistics already included in the app.

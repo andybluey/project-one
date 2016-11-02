@@ -54,7 +54,7 @@
           <% else %>
             <div>Replies: <%= a.comments.count%> - Updated: <%= time_ago_in_words(a.comments.last.created_at) %> ago.</div>
           <% end %>
-          </div>
+
           <% if a.tags.count == 0 %>
             No tags
           <% else %>Tags: <% a.tags.each do |b| %>

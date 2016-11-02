@@ -10,47 +10,52 @@
 </head>
 <body>
 
-<header></header> <br>
+<div class="row">
 
-<div class="container">
-
-  <% if flash[:success] %>
-    <h3><%= flash[:success] %></h3>
-  <% end %>
-  <% if flash[:error] %>
-    <h3><%= flash[:error] %></h3>
-  <% end %>
-
-
-  <nav> <ul>
-    <li><h4>hack overflow</h4></li>
-    <li><a class="button button-primary" <%= link_to("Home", questions_path()) %></a></li>
-    <li><a class="button button-primary" <%= link_to("Tags", tags_path()) %></a></li>
-    <li><a class="button button-primary" <%= link_to("Users", users_path()) %></a></li>
-
-    <!-- <h4><#%= link_to( "Home", questions_path() )%>
-    <#%= link_to( "Tags", tags_path() )%>
-    <#%= link_to( "Users", users_path() )%> -->
-    <% unless @current_user.present? %>
-      <li><a class="button button-primary" <%= link_to("Login", login_path()) %></a></li>
-      <li><a class="button button-primary" <%= link_to("Sign Up", new_user_path()) %></a></li>
-    <% else %>
-      <li><a class="button button-primary" <%= link_to("View your profile", user_path( @current_user.id ))%></a></li>
-      <li><a class="button button-primary" <%= link_to("Log out of #{@current_user.name}", logout_path(), :method => :delete) %></a></li>
-      <!-- <#%= link_to( "View your profile", user_path( @current_user.id ) ) %>
-      <#%= link_to( "Log out of #{@current_user.name}", logout_path(), :method => :delete ) %> -->
+    <% if flash[:success] %>
+      <h3><%= flash[:success] %></h3>
+    <% end %>
+    <% if flash[:error] %>
+      <h3><%= flash[:error] %></h3>
     <% end %>
 
-    <%= @online_users %></h4>
-    </ul>
-  </nav>
+
+    <nav>
+      <ul>
+        <li><a href="/questions"><h4 class="title">hack overflow</h4></a></li>
+        <li><a class="button button-primary" <%= link_to("Home", questions_path()) %></a></li>
+        <li><a class="button button-primary" <%= link_to("Tags", tags_path()) %></a></li>
+        <li><a class="button button-primary" <%= link_to("Users", users_path()) %></a></li>
+
+        <!-- <h4><#%= link_to( "Home", questions_path() )%>
+        <#%= link_to( "Tags", tags_path() )%>
+        <#%= link_to( "Users", users_path() )%> -->
+        <% unless @current_user.present? %>
+          <li><a class="button button-primary" <%= link_to("Login", login_path()) %></a></li>
+          <li><a class="button button-primary" <%= link_to("Sign Up", new_user_path()) %></a></li>
+        <% else %>
+          <li><a class="button button-primary" <%= link_to("View your profile", user_path( @current_user.id ))%></a></li>
+          <li><a class="button button-primary" <%= link_to("Log out of #{@current_user.name}", logout_path(), :method => :delete) %></a></li>
+          <!-- <#%= link_to( "View your profile", user_path( @current_user.id ) ) %>
+          <#%= link_to( "Log out of #{@current_user.name}", logout_path(), :method => :delete ) %> -->
+        <% end %>
+
+        <%= @online_users %></h4>
+      </ul>
+    </nav>
+
+</div>
+<br>
+<div class="container">
+
+
 
 <%= yield %>
 
-
+<br>
 
 </div>
-<!-- <footer></footer> -->
+<div class="footer">Hack Overflow</div>
 <script src="//cdn.jsdelivr.net/medium-editor/latest/js/medium-editor.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/medium-editor/latest/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
 
