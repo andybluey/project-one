@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="row">
+<div class="row nav">
 
     <% if flash[:success] %>
       <h3><%= flash[:success] %></h3>
@@ -20,30 +20,31 @@
     <% end %>
 
 
-    <nav>
-      <ul>
-        <li><a href="/questions"><h4 class="title">hack overflow</h4></a></li>
-        <li><a class="button button-primary" <%= link_to("Home", questions_path()) %></a></li>
-        <li><a class="button button-primary" <%= link_to("Tags", tags_path()) %></a></li>
-        <li><a class="button button-primary" <%= link_to("Users", users_path()) %></a></li>
+    <div class="nav">
+      <div class="u-pull-left">
+        <a href="/questions"><h4 class="title">hack overflow</h4></a>
+      </div>
+      <div class="u-pull-right">
+        <a class="button button-primary" <%= link_to("Home", questions_path()) %></a>
+        <a class="button button-primary" <%= link_to("Tags", tags_path()) %></a>
+        <a class="button button-primary" <%= link_to("Users", users_path()) %></a>
 
         <!-- <h4><#%= link_to( "Home", questions_path() )%>
         <#%= link_to( "Tags", tags_path() )%>
         <#%= link_to( "Users", users_path() )%> -->
         <% unless @current_user.present? %>
-          <li><a class="button button-primary" <%= link_to("Login", login_path()) %></a></li>
-          <li><a class="button button-primary" <%= link_to("Sign Up", new_user_path()) %></a></li>
+          <a class="button button-primary" <%= link_to("Login", login_path()) %></a>
+          <a class="button button-primary" <%= link_to("Sign Up", new_user_path()) %></a>
         <% else %>
-          <li><a class="button button-primary" <%= link_to("View your profile", user_path( @current_user.id ))%></a></li>
-          <li><a class="button button-primary" <%= link_to("Log out of #{@current_user.name}", logout_path(), :method => :delete) %></a></li>
+          <a class="button button-primary" <%= link_to("View your profile", user_path( @current_user.id ))%></a>
+          <a class="button button-primary" <%= link_to("Log out of #{@current_user.name}", logout_path(), :method => :delete) %></a>
           <!-- <#%= link_to( "View your profile", user_path( @current_user.id ) ) %>
           <#%= link_to( "Log out of #{@current_user.name}", logout_path(), :method => :delete ) %> -->
         <% end %>
 
         <%= @online_users %></h4>
-      </ul>
-    </nav>
-
+      </div>
+    </div>
 </div>
 <br>
 <div class="container">
